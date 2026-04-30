@@ -30,4 +30,26 @@ public class UserController {
 
         return new ResponseEntity<UserDto>(userDto, HttpStatus.OK);
     }
+
+    @PutMapping("update/{id}")
+    public ResponseEntity<String> updateUser(@PathVariable Long id, @RequestBody UserDto userDto){
+        try{
+            userService.updateUser(id, userDto);
+            return ResponseEntity.ok("User has been updated");
+        } catch (IllegalArgumentException e){
+            e.printStackTrace();
+            return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @DeleteMapping("delete/{id}")
+    public ResponseEntity<Void> deleteUser(@PathVariable long id){
+        try{
+            userService.deleteUser(id);
+            return ResponseEntity.noContent().build();
+        }catch (IllegalArgumentException e){
+            e.printStackTrace();
+            return null;
+        }
+    }
 }

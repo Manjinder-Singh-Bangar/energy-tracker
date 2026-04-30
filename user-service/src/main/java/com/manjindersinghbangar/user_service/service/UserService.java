@@ -5,6 +5,7 @@ import com.manjindersinghbangar.user_service.entity.User;
 import com.manjindersinghbangar.user_service.repositry.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 @Slf4j
@@ -18,7 +19,6 @@ public class UserService {
     }
 
     public UserDto createUser(UserDto input){
-        log.info("Creating user: {}", input);
         final User createdUser = User.builder()
                 .name(input.getName())
                 .surname(input.getSurname())
@@ -46,9 +46,28 @@ public class UserService {
     }
 
     public UserDto getUserById(long id){
-        log.info("Getting user by id {}", id);
+
 
         return userRepository.findById(id).map(this::toDto).orElse(null);
 
     }
+
+    public void updateUser(long id, UserDto userDto){
+        User user = userRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("User not found"));
+        user.setAddress(userDto.getAddress());
+        user.setName(userDto.getName());
+        user.setSurname(userDto.getSurname());
+        user.setAlerting(userDto.isAlerting());
+        user.setEmail(userDto.getEmail());
+        user.setEnergyAlertingThreshold(userDto.getEnergyAlertingThreshold());
+
+        userRepository.save(user);
+    }
+
+    public void deleteUser(long id){
+        User user = userRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("User not found"));
+        userRepository.delete(user);
+    }
+
+
 }
