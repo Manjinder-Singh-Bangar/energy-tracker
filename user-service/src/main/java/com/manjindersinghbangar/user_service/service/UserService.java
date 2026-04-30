@@ -44,4 +44,11 @@ public class UserService {
                 .energyAlertingThreshold(user.getEnergyAlertingThreshold())
                 .build();
     }
+
+    public UserDto getUserById(long id){
+        log.info("Getting user by id {}", id);
+
+        return userRepository.findById(id).map(this::toDto).orElse(null);
+
+    }
 }
