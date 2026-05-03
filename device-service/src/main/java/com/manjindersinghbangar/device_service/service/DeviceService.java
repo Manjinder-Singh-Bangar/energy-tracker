@@ -42,6 +42,13 @@ public class DeviceService {
         return mapToDto(updatedDevice);
     }
 
+    public void deleteDevice(Long id){
+        if(!deviceRepository.existsById(id)){
+            throw new IllegalArgumentException("Device with id:- " + id + " does not exists.");
+        }
+        deviceRepository.deleteById(id);
+    }
+
     private DeviceDto mapToDto(Device device){
         DeviceDto dto = new DeviceDto();
         dto.setLocation(device.getLocation());

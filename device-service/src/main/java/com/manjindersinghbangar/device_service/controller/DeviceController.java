@@ -31,4 +31,10 @@ public class DeviceController {
         DeviceDto updatedDto = deviceService.updateDevice(id, deviceDto);
         return ResponseEntity.ok(updatedDto);
     }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<Void> deleteDevice(@PathVariable Long id){
+        deviceService.deleteDevice(id);
+        return ResponseEntity.noContent().build();
+    }
 }

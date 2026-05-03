@@ -23,6 +23,7 @@ user-service/src/main/resources/application.properties
 user-service/src/main/resources/application-*.properties
 !user-service/src/main/resources/application-example.properties
 
+
 # OS files
 .DS_Store
 Thumbs.db
