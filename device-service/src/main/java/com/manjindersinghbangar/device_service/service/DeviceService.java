@@ -18,6 +18,17 @@ public class DeviceService {
         return mapToDto(device);
     }
 
+    public DeviceDto createDevice(DeviceDto input){
+        Device device = new Device();
+        device.setLocation(input.getLocation());
+        device.setType(input.getType());
+        device.setUserId(input.getUserId());
+        device.setName(input.getName());
+
+        final Device createdDevice = deviceRepository.save(device);
+        return mapToDto(createdDevice);
+    }
+
     private DeviceDto mapToDto(Device device){
         DeviceDto dto = new DeviceDto();
         dto.setLocation(device.getLocation());

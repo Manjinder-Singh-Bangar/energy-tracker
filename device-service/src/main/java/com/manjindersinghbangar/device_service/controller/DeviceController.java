@@ -3,10 +3,7 @@ package com.manjindersinghbangar.device_service.controller;
 import com.manjindersinghbangar.device_service.dto.DeviceDto;
 import com.manjindersinghbangar.device_service.service.DeviceService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/device")
@@ -23,5 +20,10 @@ public class DeviceController {
         return ResponseEntity.ok(deviceDto);
     }
 
+    @PostMapping("/create")
+    public ResponseEntity<DeviceDto> createDevice(@RequestBody DeviceDto deviceDto){
+        DeviceDto createdDevice = deviceService.createDevice(deviceDto);
+        return ResponseEntity.ok(createdDevice);
+    }
     
 }
