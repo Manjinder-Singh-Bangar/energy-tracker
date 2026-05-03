@@ -25,5 +25,10 @@ public class DeviceController {
         DeviceDto createdDevice = deviceService.createDevice(deviceDto);
         return ResponseEntity.ok(createdDevice);
     }
-    
+
+    @PutMapping("/update/{id}")
+    public ResponseEntity<DeviceDto> updateDevice(@PathVariable Long id, @RequestBody DeviceDto deviceDto){
+        DeviceDto updatedDto = deviceService.updateDevice(id, deviceDto);
+        return ResponseEntity.ok(updatedDto);
+    }
 }
