@@ -2,6 +2,7 @@ package com.manjindersinghbangar.user_service.service;
 
 import com.manjindersinghbangar.user_service.dto.UserDto;
 import com.manjindersinghbangar.user_service.entity.User;
+import com.manjindersinghbangar.user_service.exception.UserNotFoundException;
 import com.manjindersinghbangar.user_service.repositry.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
@@ -46,14 +47,11 @@ public class UserService {
     }
 
     public UserDto getUserById(long id){
-
-
         return userRepository.findById(id).map(this::toDto).orElse(null);
-
     }
 
     public void updateUser(long id, UserDto userDto){
-        User user = userRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("User not found"));
+        User user = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("User not found"));
         user.setAddress(userDto.getAddress());
         user.setName(userDto.getName());
         user.setSurname(userDto.getSurname());
@@ -65,7 +63,7 @@ public class UserService {
     }
 
     public void deleteUser(long id){
-        User user = userRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("User not found"));
+        User user = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("User not found"));
         userRepository.delete(user);
     }
 
