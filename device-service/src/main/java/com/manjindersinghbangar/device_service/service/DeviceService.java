@@ -2,6 +2,7 @@ package com.manjindersinghbangar.device_service.service;
 
 import com.manjindersinghbangar.device_service.dto.DeviceDto;
 import com.manjindersinghbangar.device_service.entity.Device;
+import com.manjindersinghbangar.device_service.exception.DeviceNotFoundException;
 import com.manjindersinghbangar.device_service.repository.DeviceRepository;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +15,7 @@ public class DeviceService {
     }
 
     public DeviceDto getDeviceById(Long id){
-        Device device = deviceRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Device not found"));
+        Device device = deviceRepository.findById(id).orElseThrow(() -> new DeviceNotFoundException("Device not found"));
         return mapToDto(device);
     }
 
@@ -30,7 +31,7 @@ public class DeviceService {
     }
 
     public DeviceDto updateDevice(Long id, DeviceDto input){
-        Device existingDevice = deviceRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Device not found"));
+        Device existingDevice = deviceRepository.findById(id).orElseThrow(() -> new DeviceNotFoundException("Device not found"));
 
         existingDevice.setName(input.getName());
         existingDevice.setType(input.getType());
@@ -44,7 +45,7 @@ public class DeviceService {
 
     public void deleteDevice(Long id){
         if(!deviceRepository.existsById(id)){
-            throw new IllegalArgumentException("Device with id:- " + id + " does not exists.");
+            throw new DeviceNotFoundException("Device with id:- " + id + " does not exists.");
         }
         deviceRepository.deleteById(id);
     }
