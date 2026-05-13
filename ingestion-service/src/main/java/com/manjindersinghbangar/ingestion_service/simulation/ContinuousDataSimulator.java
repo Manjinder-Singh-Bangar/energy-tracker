@@ -33,12 +33,12 @@ public class ContinuousDataSimulator implements CommandLineRunner {
     @Value("${simulation.endpoint}")
     private String ingestionEndpoint;
 
-    @Scheduled(fixedDelayString = "${simulation.interval-ms}")
+    //@Scheduled(fixedDelayString = "${simulation.interval-ms}")
     public void sendMockData(){
         for (int i = 0; i < requestPerInterval; i++) {
             EnergyUsageDto dto = EnergyUsageDto.builder()
                     .deviceId(random.nextLong(1, 6))
-                    .energyConsumed((double) Math.round(random.nextDouble(0.0, 2.0) * 100.0) / 100)
+                    .energyConsumed((double) Math.round(random.nextDouble(0.0, 2.0) * 1000.0) / 100)
                     .timeStamp(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant())
                     .build();
 
